@@ -1,6 +1,5 @@
 import nltk
-from nltk.corpus import gutenberg as gt
-gt.fileids() #sample texts
+from nltk.corpus import gutenberg as gt, webtext as wt, nps_chat
 
 emma = gt.words("austen-emma.txt") #returns all words from the text
 
@@ -24,3 +23,15 @@ def show_file_information(fileid): #show some informations about a given text
 for fileid in gt.fileids():
   show_file_information(fileid)
 '''
+
+#WEBTEXT
+
+def show_first_characters(fileid, num = 65):
+  print(fileid, wt.raw(fileid)[:num], '...')
+
+for fileid in wt.fileids():
+  show_first_characters(fileid)
+
+
+#NPS CHAT
+chatroom = nps_chat.posts('10-19-20s_706posts.xml')
