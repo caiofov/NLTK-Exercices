@@ -1,5 +1,5 @@
 import nltk
-from nltk.corpus import gutenberg as gt, webtext as wt, nps_chat, brown, reuters, inaugural
+from nltk.corpus import gutenberg as gt, webtext as wt, nps_chat, brown, reuters, inaugural,udhr
 
 emma = gt.words("austen-emma.txt") #returns all words from the text
 
@@ -99,3 +99,16 @@ def plot_year_distribution_inaugural_file(targets):
 
 #plot_year_distribution_inaugural_file(['america', 'citizen'])
 
+
+#UNIVERSAL DECLARATION OF HUMAN RIGHTS
+
+udhr_fileids = nltk.corpus.udhr.fileids()
+
+def plot_languages_udhr(languages):
+  cfd = nltk.ConditionalFreqDist(
+           (lang, len(word))
+           for lang in languages
+           for word in udhr.words(lang + '-Latin1'))
+  cfd.plot(cumulative=True)
+
+plot_languages_udhr(['Chickasaw', 'English', 'German_Deutsch', 'Greenlandic_Inuktikut', 'Hungarian_Magyar', 'Ibibio_Efik'])
