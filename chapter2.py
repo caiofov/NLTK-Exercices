@@ -1,5 +1,5 @@
 import nltk
-from nltk.corpus import gutenberg as gt, webtext as wt, nps_chat, brown
+from nltk.corpus import gutenberg as gt, webtext as wt, nps_chat, brown, reuters
 
 emma = gt.words("austen-emma.txt") #returns all words from the text
 
@@ -64,4 +64,17 @@ def frequency_distribution_categories(categories_names, modals): #the same as th
             for word in brown.words(categories=genre))
   cfd.tabulate(conditions=categories_names, samples=modals) #prints the given data in table form
 
-frequency_distribution_categories(['news', 'religion', 'hobbies', 'science_fiction', 'romance', 'humor'], ['can', 'could', 'may', 'might', 'must', 'will'])
+#frequency_distribution_categories(['news', 'religion', 'hobbies', 'science_fiction', 'romance', 'humor'], ['can', 'could', 'may', 'might', 'must', 'will'])
+
+
+#REUTERS CORPUS - The documents have been classified into 90 topics, and grouped into two sets, called "training" and "test"
+reuters_fileids = reuters.fileids()
+reuters_categories = reuters.categories()
+
+training9865_categories = reuters.categories('training/9865') #a single document can have more than 1 category
+#it alsos accepts a list of documents as parameters
+
+files_barley_category = reuters.fileids('barley') #returns all file ids in barley category
+#it can be given a list of categories too as well
+
+list_words = reutres.words('training/9865')
