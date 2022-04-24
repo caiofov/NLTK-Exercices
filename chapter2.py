@@ -1,5 +1,5 @@
 import nltk
-from nltk.corpus import gutenberg as gt, webtext as wt, nps_chat, brown, reuters
+from nltk.corpus import gutenberg as gt, webtext as wt, nps_chat, brown, reuters, inaugural
 
 emma = gt.words("austen-emma.txt") #returns all words from the text
 
@@ -77,4 +77,25 @@ training9865_categories = reuters.categories('training/9865') #a single document
 files_barley_category = reuters.fileids('barley') #returns all file ids in barley category
 #it can be given a list of categories too as well
 
-list_words = reutres.words('training/9865')
+list_words = reuters.words('training/9865') #also accepts a list of file ids
+
+
+#INAUGURAL ADDRESS CORPUS
+inaugural_fileids = inaugural.fileids()
+#the first 4 characters of each file id is the year of the text
+def get_year_inaugural_file(fileids):
+  print([fileid[:4] for fileid in inaugural.fileids()])
+
+#get_year_inaugural_file(inaugural_fileids)
+
+def plot_year_distribution_inaugural_file(targets):
+  cfd = nltk.ConditionalFreqDist(
+           (target, fileid[:4])
+           for fileid in inaugural.fileids()
+           for w in inaugural.words(fileid)
+           for target in targets
+           if w.lower().startswith(target))
+  cfd.plot()
+
+#plot_year_distribution_inaugural_file(['america', 'citizen'])
+
