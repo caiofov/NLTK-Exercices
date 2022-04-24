@@ -42,3 +42,26 @@ chatroom = nps_chat.posts('10-19-20s_706posts.xml') #list of 'lists' (list of me
 #BROWN CORPUS - first eletronic corpus
 categories = brown.categories() #categories of the corpus
 
+words_news = brown.words(categories = "news") #words from the news categories
+file_cg22 = brown.words(fileids=["cg22"]) #words from the file specified
+some_sentences = brown.sents(categories=['news', 'editorial', 'reviews']) #list of sentences of the categories specified
+
+
+#stylistics = systematic differences between genre
+def frequency_distribution_category(category_name, modals): #prints the frequency of each given word in a given genre
+  words_category = brown.words(categories=category_name)
+  fdist = nltk.FreqDist(w.lower() for w in words_category)
+  
+  for m in modals:
+    print(m + ':', fdist[m], end=' ')
+
+#frequency_distribution_category("news", ['can', 'could', 'may', 'might', 'must', 'will'])
+
+def frequency_distribution_categories(categories_names, modals): #the same as the previous one, but for more genres
+  cfd = nltk.ConditionalFreqDist(
+            (genre, word)
+            for genre in brown.categories()
+            for word in brown.words(categories=genre))
+  cfd.tabulate(conditions=categories_names, samples=modals) #prints the given data in table form
+
+frequency_distribution_categories(['news', 'religion', 'hobbies', 'science_fiction', 'romance', 'humor'], ['can', 'could', 'may', 'might', 'must', 'will'])
