@@ -111,4 +111,19 @@ def plot_languages_udhr(languages):
            for word in udhr.words(lang + '-Latin1'))
   cfd.plot(cumulative=True)
 
-plot_languages_udhr(['Chickasaw', 'English', 'German_Deutsch', 'Greenlandic_Inuktikut', 'Hungarian_Magyar', 'Ibibio_Efik'])
+# plot_languages_udhr(['Chickasaw', 'English', 'German_Deutsch', 'Greenlandic_Inuktikut', 'Hungarian_Magyar', 'Ibibio_Efik'])
+
+
+#SECTION 2
+#Counting Words by Genre
+#freqDist -> simple input | ConditionalFreqDist -> pair of (condition, word)
+
+def count_word_by_genre(genre, word):
+    genre_word = [(gen,wrd) for gen in [genre, word]
+                    for wrd in brown.words(categories = gen)
+                    ]
+    return len(genre_word)
+
+
+#print(count_word_by_genre('news', 'romance'))
+
