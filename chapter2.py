@@ -168,6 +168,29 @@ condition_udhr = nltk.ConditionalFreqDist(len_words_in_udhr(['Chickasaw', 'Engli
 #condition_udhr.plot()
 
 #tabulate parameters -> when we omit, we get all of them
-condition_udhr.tabulate(conditions=['English','German_Deutsch'], samples=range(10), cumulative=True)
+#condition_udhr.tabulate(conditions=['English','German_Deutsch'], samples=range(10), cumulative=True)
 
+
+#2.4   Generating Random Text with Bigrams
+#bigrams -> word pairs
+#bigrams() -> takes a list of words and builds a list of consecutive word pairs. We need to use the list() function in order to see a list
+
+sent = ['In', 'the', 'beginning', 'God', 'created', 'the', 'heaven', 'and', 'the', 'earth', '.']
+#print(list(nltk.bigrams(sent)))
+
+#simple loop to generate a text
+#word = initial content
+def generate_model(cfdist, word, num=15):
+  for i in range (num):
+    print(word, end=' ')
+    word = cfdist[word].max() #reset to be the most likely token in that context
+  
+text = nltk.corpus.genesis.words('english-kjv.txt')
+bigrams = nltk.bigrams(text) #transform the text into bigrams
+cfd = nltk.ConditionalFreqDist(bigrams)
+
+#print(cfd['living']) #frequent words next to the word "living"
+
+#generate_model(cfd, 'living')
+#it is a simple approach that gets stuck in a loop
 
