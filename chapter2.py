@@ -118,11 +118,56 @@ def plot_languages_udhr(languages):
 #Counting Words by Genre
 #freqDist -> simple input | ConditionalFreqDist -> pair of (condition, word)
 
-def count_word_by_genre(genre, word):
-    genre_word = [(gen,wrd) for gen in [genre, word]
+def words_by_genre(genres):
+    genre_word = [(gen,wrd) for gen in genres
                     for wrd in brown.words(categories = gen)
                     ]
-    return len(genre_word)
+    return genre_word
+    
+
+def count_words_by_genre(genres):
+  genre_word = words_by_genre(genres)
+  
+  return len(genre_word)
 
 
-#print(count_word_by_genre('news', 'romance'))
+#print(count_words_by_genre(['news', 'romance']))
+
+cfd = nltk.ConditionalFreqDist(words_by_genre(["news","romance"]))
+#cfd -> conditionalFreqDist with 2 conditions (news and romance)
+#each of these conditions is just a frequency distribution
+number_of_word_could_romance = cfd['romance']['could']
+
+
+#2.3   Plotting and Tabulating Distributions
+
+# The condition is either of the specified words, and the counts being plotted are the number of times the word occured in a particular speech. It exploits the fact that the filename for each speech, e.g., 1865-Lincoln.txt contains the year as the first four characters. This code generates the pair (word, year) for every instance of a word whose lowercased form starts with the word — such as "Americans" for "america" — in the file 1865-Lincoln.txt.
+
+def words_in_inaugural(words):
+  words_inaugural = [(target, fileid[:4]) 
+      for fileid in inaugural.fileids()
+      for w in inaugural.words(fileid)
+      for target in words if w.lower().startswith(target)
+      ]
+
+  return words_inaugural
+
+condition = nltk.ConditionalFreqDist(words_in_inaugural(['america','citizen']))
+#condition.plot()
+
+#length of the words in each language
+def len_words_in_udhr(languages):
+  len_words = [(lang, len(word))
+                for lang in languages
+                for word in udhr.words(lang + '-Latin1')
+                ]
+  return len_words
+
+condition_udhr = nltk.ConditionalFreqDist(len_words_in_udhr(['Chickasaw', 'English', 'German_Deutsch', 'Greenlandic_Inuktikut', 'Hungarian_Magyar', 'Ibibio_Efik']))
+
+#condition_udhr.plot()
+
+#tabulate parameters -> when we omit, we get all of them
+condition_udhr.tabulate(conditions=['English','German_Deutsch'], samples=range(10), cumulative=True)
+
+
