@@ -194,3 +194,6 @@ cfd = nltk.ConditionalFreqDist(bigrams)
 #generate_model(cfd, 'living')
 #it is a simple approach that gets stuck in a loop
 
+#4 - LEXICAL RESOURCES
+#lexical entry -> consists of a headword (lemma) along with additional information such as the part of speech and the sense of definition
+#homonyms -> two distinct words having the same spelling
