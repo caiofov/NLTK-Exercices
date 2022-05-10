@@ -1,5 +1,5 @@
 import nltk
-from nltk.corpus import gutenberg as gt, webtext as wt, nps_chat, brown, reuters, inaugural,udhr
+from nltk.corpus import gutenberg as gt, webtext as wt, nps_chat, brown, reuters, inaugural,udhr,stopwords
 
 emma = gt.words("austen-emma.txt") #returns all words from the text
 
@@ -197,3 +197,24 @@ cfd = nltk.ConditionalFreqDist(bigrams)
 #4 - LEXICAL RESOURCES
 #lexical entry -> consists of a headword (lemma) along with additional information such as the part of speech and the sense of definition
 #homonyms -> two distinct words having the same spelling
+
+#4.1 - Wordlist Corpora
+
+#computes the vocabulary of a text, then removes all items that occur in an existing wordlist, leaving just the uncommon or mis-spelt words.
+def unusual_words(text):
+  text_vocab = set(w.lower() for w in text if w.isalpha())
+  english_vocab = set(w.lower() for w in nltk.corpus.words.words())
+  unusual = text_vocab - english_vocab
+  return sorted(unusual)
+
+#print(unusual_words(nltk.corpus.gutenberg.words('austen-sense.txt')))
+
+#stopwords - igh-frequency words like the, to and also that we sometimes want to filter out of a document before further processing
+
+#print(stopwords.words('english'))
+
+#fraction of words in a text are not in the stopwords list
+def content_fraction(text):
+  stopwords = stopwords.words('english')
+  content = [w for w in text if w.lower() not in stopwords]
+  return len(content) / len(text)
