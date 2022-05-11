@@ -292,3 +292,30 @@ def text_to_speech(sentence, pronunciation_dictionary = nltk.corpus.cmudict.dict
 
 #print(text_to_speech('natural language processing'))
 
+#4.3 Comparative Wordlists
+# Swadesh wordlists -> 200 common words in several languages
+
+languages = nltk.corpus.swadesh.fileids()
+
+words_english = nltk.corpus.swadesh.words('en')
+
+#with "entries" we can access congnate words from multiple languages
+french_to_english = nltk.corpus.swadesh.entries(['fr','en'])
+#transforming the word list into dictionary, so we can access the items easily
+translate = dict(french_to_english)
+chien_english = translate['chien'] #example of use
+
+#inserting more languages in our translator
+german_to_english = nltk.corpus.swadesh.entries(['de','en'])
+spanish_to_english = nltk.corpus.swadesh.entries(['es','en'])
+
+translate.update(dict(german_to_english))
+translate.update(dict(spanish_to_english))
+
+#compare words in various languages
+def compare_words(languages, word_numbers):
+  return [nltk.corpus.swadesh.entries(languages)[i] for i in word_numbers]
+
+#print(compare_words(['en', 'de', 'nl', 'es', 'fr', 'pt', 'la'], [139, 140, 141, 142]))
+
+#4.4 Shoebox and Toolbox Lexicons
