@@ -218,3 +218,43 @@ def content_fraction(text):
   stopwords = stopwords.words('english')
   content = [w for w in text if w.lower() not in stopwords]
   return len(content) / len(text)
+
+
+#PUZZLE - Points: 21 (good) | 32 (very good) | 42 (excellent)
+# E G I
+# V R V
+# O N L
+# Rules:
+# 1. Words of four letter or more and must be at least one nine-letter
+# 2. Each letter may be used once per word
+# 3. Each word must contain the center letter (R)
+# 4. No plurals ending in "s", no foreign words and proper names
+
+
+def puzzle(letters, obligatory, min_length):
+  puzzle_letters = nltk.FreqDist(letters) #frequency of each letter on the puzzle
+  wordlist = nltk.corpus.words.words() #list of words
+
+  return [w for w in wordlist if len(w) >= min_length #rule 1
+                              and obligatory in w #rule 3
+                              and nltk.FreqDist(w) <= puzzle_letters #rule 2
+          ]
+
+points = {'good': 21,'very good': 32, 'excellent': 42}
+
+puzzle_words = puzzle('engivrvonl', 'r', 6)
+
+#Name corpus
+names = nltk.corpus.names
+male_names = names.words('male.txt')
+female_names = names.words('female.txt')
+agender_names = [w for w in male_names if w in female_names]
+
+ending_letters_per_gender = nltk.ConditionalFreqDist(
+                                (fileid, name[-1])
+                                for fileid in names.fileids()
+                                for name in names.words(fileid))
+
+#ending_letters_per_gender.plot()
+
+#4.2   A Pronouncing Dictionary
