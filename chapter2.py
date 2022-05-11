@@ -257,4 +257,38 @@ ending_letters_per_gender = nltk.ConditionalFreqDist(
 
 #ending_letters_per_gender.plot()
 
-#4.2   A Pronouncing Dictionary
+#4.2 A Pronouncing Dictionary
+#CMU Pronouncing Dictionary for US English
+#which was designed for use by speech synthesizers.
+
+entries = nltk.corpus.cmudict.entries() #all entries - list of tuples
+#two parts: (word, pronunciation)
+
+#checks if the last phones of the words match with the given one
+def find_rhyming_words(syllable, entries = nltk.corpus.cmudict.entries()):
+  number_of_phones = len(syllable)
+  return [word for word, pron in entries 
+                  if pron[(-1*number_of_phones):] == syllable]
+
+#print(find_rhyming_words(['N', 'IH0', 'K', 'S']))
+
+#The phones contain digits to represent 
+#primary stress (1), secondary stress (2) and no stress (0)
+def stress(pron):
+  return [char for phone in pron for char in phone if char.isdigit()]
+
+stress_pattern1 = [w for w, pron in entries if stress(pron) == ['0', '1', '0', '2', '0']]
+stress_pattern2 = [w for w, pron in entries if stress(pron) == ['0', '2', '0', '1', '0']]
+
+
+#we can also access the words by a dictionary (data structe)
+prondict = nltk.corpus.cmudict.dict()
+#print(prondict)
+
+def text_to_speech(sentence, pronunciation_dictionary = nltk.corpus.cmudict.dict()):
+  sentence_list = sentence.split(' ')
+  return [ph for w in sentence_list 
+                  for ph in prondict[w][0]]
+
+#print(text_to_speech('natural language processing'))
+
