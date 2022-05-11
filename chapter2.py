@@ -319,3 +319,12 @@ def compare_words(languages, word_numbers):
 #print(compare_words(['en', 'de', 'nl', 'es', 'fr', 'pt', 'la'], [139, 140, 141, 142]))
 
 #4.4 Shoebox and Toolbox Lexicons
+#consists of a collection of entries -> made up of fields -> most of them are optional or repeatable
+#this kind of lexical resource cannot be treated as a table or spreadsheet.
+
+dictionary_rotokas = nltk.corpus.toolbox.entries('rotokas.dic') #dicionary for rotokas language
+#a series of value pairs, like:
+# ('ps', 'V') -> indicates the part-of-speech is 'V' (verb)
+# ('ge', 'gag') -> gloss-into-english is 'gag'
+# example of sentences and translations
+
